@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - env:
+            - name: ACCEPT_EULA
+              value: 'y'
+            - name: SA_PASSWORD
+              value: P@ssword!
+          image: 'mcr.microsoft.com/mssql/server:2022-latest'
+          name: db
+          ports:
+            - name: port
+              containerPort: 1433
+              protocol: TCP

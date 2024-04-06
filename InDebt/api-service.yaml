@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: indebt-api-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: indebt-api
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 31101

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: indebt-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: indebt-api
+  template:
+    metadata:
+      labels:
+        app: indebt-api
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: indebt-api
+          image: registry.kzn.akvelon.com/net_internship_3/indebt:latest
+          ports:
+          - containerPort: 80
+          env:
+            - name: CONNECTION_STRING
+              value: "Server=192.168.52.42,32337;Database=InDebtDev;User Id=SA;Password=P@ssword!;MultipleActiveResultSets=true;TrustServerCertificate=True;"
+            - name: AUTH_KEY
+              value: "Ayaquekmfdlkfnbldmblkdnbkdnlbndflbnrinldnblfnbldnbdlfjnbdlmbndlfnbdlfbnmcnbldfjknbldfnblfdnjlbndfn"
+            - name: MAIL_SERVICE_HOST
+              value: "smtp-mail.outlook.com"
+            - name: MAIL_SERVICE_SENDER_PASSWORD
+              value: "da24b366"
+            - name: MAIL_SERVICE_SENDER_ADDRESS
+              value: "indebttest@outlook.com"
+            - name: EXCHANGE_RATE_API_KEY
+              value: "5162cb92b90759d4f30c9e94"
+            - name: PORT
+              value: "80" 

@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  webapi:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      ConnectionStrings__MyDatabase: "Server=localhost,1433;Database=myDatabase;User Id=sa;Password=Passw0rd!;"
+  db:
+    container_name: db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1401:1433"
+    environment:
+      SA_PASSWORD: "Passw0rd!"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      MSSQL_TCP_PORT: "1433"
+    volumes:
+      - type: volume
+        source: mssqlvolume
+        target: /data
+      - type: bind
+        source: ./../../mssql/data
+        target: /var/opt/mssql/data
+volumes:
+  mssqlvolume:
